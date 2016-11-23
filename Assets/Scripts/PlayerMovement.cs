@@ -4,8 +4,9 @@ using System.Collections;
 public class PlayerMovement : MonoBehaviour 
 {
 	bool Ground;
-	bool Left;
-	bool Right;
+	public bool Left;
+	public bool Right;
+	public bool Flipped;
 	public int Speed;
 	public int jumpPower;
 
@@ -14,10 +15,12 @@ public class PlayerMovement : MonoBehaviour
 		if (Input.GetKeyDown (KeyCode.A)) 
 		{
 			Left = true;
+			Flipped = false;
 		}
 		if (Input.GetKeyDown (KeyCode.D)) 
 		{
 			Right = true;
+			Flipped = true;
 		}
 		if (Input.GetKeyUp (KeyCode.A)) 
 		{
