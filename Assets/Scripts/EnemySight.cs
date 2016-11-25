@@ -3,44 +3,29 @@ using System.Collections;
 
 public class EnemySight : MonoBehaviour
 {
-    public RaycastHit hit;
-    private GameObject player;
-  
+	public int range;
+	float distance;
+	float distance1;
+	public Transform target;
 
-    void Start()
-    {
-        player = GameObject.FindGameObjectWithTag("Player");
-       
-    }
-
-    void OnTriggerStay(Collider other)
-    {
-        if (other.CompareTag("Player") || other.CompareTag("PlayerParts"))
-        {
-
-            Vector3 direction = other.transform.position - transform.position;
-
-            if (Physics.Raycast(transform.position, direction.normalized, out hit))
-            {
-
-                if (hit.collider.gameObject == player)
-                {
-
-                    if (hit.distance > 60)
-                    {
-                        ai.Chase();
-                    }
-                    if (hit.distance <= 40)
-                    {
-                        ai.Attack();
-                    }
-                }
-            }
-            else
-            {
-                ai.Idle();
-            }
-        }
-
-    }
+	void Update () 
+	{
+		distance = target.position.x - transform.position.x;
+		//Debug.Log (distance);
+		if(distance < 0)
+		{
+			distance1 = distance * -1;
+			if(range > distance1)
+			{
+				//schiet link
+			}
+		}
+		if(distance > 0)
+		{
+			if(range > distance)
+			{
+				//schiet rechts
+			}
+		}
+	}
 }

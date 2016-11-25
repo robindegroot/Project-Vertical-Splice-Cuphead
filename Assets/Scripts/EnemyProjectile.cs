@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Projectile : MonoBehaviour
 {
+	//moeten we helemaal verander
     private float speed;
 
 	
@@ -24,7 +25,7 @@ public class Projectile : MonoBehaviour
     {
         if (other.CompareTag("EnemyParts")|| other.CompareTag("EnemyTurret"))
         {
-            EnemyHealth.enemyhp.Hurt(50);
+//            EnemyHealth.enemyhp.Hurt(50);
             Destroy(gameObject);
         }
         if(other.CompareTag("Props"))
