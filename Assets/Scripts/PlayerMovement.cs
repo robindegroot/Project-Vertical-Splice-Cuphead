@@ -4,23 +4,15 @@ using System.Collections;
 public class PlayerMovement : MonoBehaviour 
 {
 	bool Ground;
-<<<<<<< HEAD:Assets/Scripts/PlayerMovement.cs
 	public bool Left;
 	public bool Right;
 	public bool Flipped;
 	public int Speed;
 	public int jumpPower;
-=======
-	bool Left;
-	bool Right;
 	bool isCrouched = false;
-
-	int Speed = 5;
-	int jumpPower = 750;
-
 	float crouchHeight = 0.5f;
 	float standHeight = 1f;
->>>>>>> origin/master:Assets/Scripts/PlayerMovement.cs
+
 
 	void Update () 
 	{
