@@ -7,41 +7,24 @@ public class rotationAngle : MonoBehaviour {
 	private bool aimFwd;
 	private bool aimBwd;
 	private bool aimDown;
-	bool left;
-	bool right;
-	bool flipped;
-	void Start(){
-
-
-	}
-
-
 	void Update() {
-		bool left = GameObject.Find("Player").GetComponent<PlayerMovement>().Left;
-		bool right = GameObject.Find("Player").GetComponent<PlayerMovement>().Right;
-		bool flipped = GameObject.Find("Player").GetComponent<PlayerMovement>().Flipped;
 		transform.eulerAngles = new Vector3 (0, 0, 45 * Rotation);
-			checkKeys ();
-		if (flipped) {
-			executeR ();
-		}
-		if (!flipped) {
-			executeL ();
-		}
 
+		checkKeys ();
+		execute ();
 	}
 
 	void checkKeys(){
 
-		if (Input.GetKeyDown ("i")) {
+		if (Input.GetKeyDown ("up")) {
 			aimUp = true;
-		} else if (Input.GetKeyUp ("i")) {
+		} else if (Input.GetKeyUp ("up")) {
 			aimUp = false;
 		}
 
-		if (Input.GetKeyDown ("j")) {
+		if (Input.GetKeyDown ("right")) {
 			aimFwd = true;
-		} else if (Input.GetKeyUp ("j")) {
+		} else if (Input.GetKeyUp ("right") || Input.GetKeyUp ("left")) {
 			aimFwd = false;
 		}
 
@@ -53,16 +36,16 @@ public class rotationAngle : MonoBehaviour {
 		}
 			
 
-		if (Input.GetKeyDown ("n")) {
+		if (Input.GetKeyDown ("down")) {
 			aimDown = true;
-		} else if (Input.GetKeyUp ("n")) {
+		} else if (Input.GetKeyUp ("down")) {
 			aimDown = false;
 		}
 
 	}
 
 
-	void executeR(){
+	void execute(){
 
 			if (aimUp) {
 			Rotation = 2;
@@ -70,35 +53,26 @@ public class rotationAngle : MonoBehaviour {
 			Rotation = 0;
 		}
 			if (aimUp && aimFwd) {
-			Rotation = 0.5f;
+			Rotation = 1;
 		} else if (aimFwd) {
 			Rotation = 0;
 		}
 
-		if (aimDown && aimFwd) {
-			Rotation = -0.5f;
-		} else if (aimDown) {
-			Rotation = -2;
-		}
-
-	}
-
-	void executeL(){
-		if (aimUp) {
-			Rotation = 2;
-		} else if (!aimUp) {
-			Rotation = 4;
-		}
-		if (aimUp && aimFwd) {
-			Rotation = 3.5f;
-		} else if (aimFwd) {
+		if (aimUp && aimBwd) {
+			Rotation = 3;
+		} else if (aimBwd) {
 			Rotation = 4;
 		}
 
 		if (aimDown && aimFwd) {
-			Rotation = 4.5f;
+			Rotation = -1;
 		} else if (aimDown) {
 			Rotation = -2;
 		}
+
+		if (aimDown && aimBwd) {
+			Rotation = 5;
+		} 
+
 	}
 }

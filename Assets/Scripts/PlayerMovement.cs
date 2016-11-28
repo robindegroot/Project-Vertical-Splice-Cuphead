@@ -4,11 +4,23 @@ using System.Collections;
 public class PlayerMovement : MonoBehaviour 
 {
 	bool Ground;
+<<<<<<< HEAD:Assets/Scripts/PlayerMovement.cs
 	public bool Left;
 	public bool Right;
 	public bool Flipped;
 	public int Speed;
 	public int jumpPower;
+=======
+	bool Left;
+	bool Right;
+	bool isCrouched = false;
+
+	int Speed = 5;
+	int jumpPower = 750;
+
+	float crouchHeight = 0.5f;
+	float standHeight = 1f;
+>>>>>>> origin/master:Assets/Scripts/PlayerMovement.cs
 
 	void Update () 
 	{
@@ -22,14 +34,6 @@ public class PlayerMovement : MonoBehaviour
 			Right = true;
 			Flipped = true;
 		}
-		if (Input.GetKeyUp (KeyCode.A)) 
-		{
-			Left = false;
-		}
-		if (Input.GetKeyUp (KeyCode.D)) 
-		{
-			Right = false;
-		}
 		if (Input.GetKeyDown (KeyCode.W) && Ground == true) 
 		{
 			jump ();
@@ -37,6 +41,15 @@ public class PlayerMovement : MonoBehaviour
 		if(Input.GetKeyDown (KeyCode.S) && Ground == true)
 		{
 			crouch ();
+		}
+
+		if (Input.GetKeyUp (KeyCode.A)) 
+		{
+			Left = false;
+		}
+		if (Input.GetKeyUp (KeyCode.D)) 
+		{
+			Right = false;
 		}
 		if(Input.GetKeyUp (KeyCode.S) && Ground == true)
 		{
@@ -74,10 +87,14 @@ public class PlayerMovement : MonoBehaviour
 	}
 	void crouch ()
 	{
-		//bukken
+		gameObject.GetComponent<BoxCollider2D> ().size = new Vector2 (1,crouchHeight);
+		Speed = Speed / 3;
+		isCrouched = true;
 	}
 	void standup ()
 	{
-		//opstaan
+		gameObject.GetComponent<BoxCollider2D> ().size = new Vector2 (1,standHeight);
+		Speed = Speed * 3;
+		isCrouched = false;
 	}
 }
