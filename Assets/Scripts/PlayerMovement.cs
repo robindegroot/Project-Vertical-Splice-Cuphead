@@ -46,7 +46,7 @@ public class PlayerMovement : MonoBehaviour
 		{
 			Right = false;
 		}
-		if(Input.GetKeyUp (KeyCode.S) && Ground == true)
+		if(Input.GetKeyUp (KeyCode.S) && Ground == true&& isCrouched == true)
 		{
 			standup ();
 		}
@@ -83,13 +83,19 @@ public class PlayerMovement : MonoBehaviour
 	void crouch ()
 	{
 		gameObject.GetComponent<BoxCollider2D> ().size = new Vector2 (1,crouchHeight);
-		Speed = Speed / 3;
+		if (isCrouched == false) 
+		{
+			Speed = Speed / 3;
+		}
 		isCrouched = true;
 	}
 	void standup ()
 	{
 		gameObject.GetComponent<BoxCollider2D> ().size = new Vector2 (1,standHeight);
+		if(isCrouched == true)
+		{
 		Speed = Speed * 3;
+		}
 		isCrouched = false;
 	}
 }
