@@ -75,7 +75,9 @@ public class PlayerMovement : MonoBehaviour
 
 	void jump ()
 	{
-		GetComponent<Rigidbody2D>().AddForce(transform.up * jumpPower * Time.deltaTime);
+		if (Ground) {
+			GetComponent<Rigidbody2D> ().AddForce (transform.up * jumpPower * Time.deltaTime);
+		}
 	}
 	void crouch ()
 	{

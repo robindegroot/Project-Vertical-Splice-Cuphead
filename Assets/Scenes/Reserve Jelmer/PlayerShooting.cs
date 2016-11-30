@@ -36,14 +36,6 @@ public class PlayerShooting : MonoBehaviour {
 		}
 
 	}
-	/*private void Shoot()
-	{
-		nextFire = Time.time + fireRate;
-		Projectile_ newProjectile = Instantiate (
-			projectile,
-			muzzle.position,
-			muzzle.rotation) as Projectile_;
-	}*/
 
 
 
