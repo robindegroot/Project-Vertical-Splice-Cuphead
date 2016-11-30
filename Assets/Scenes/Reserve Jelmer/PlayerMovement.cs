@@ -4,12 +4,22 @@ using System.Collections;
 public class PlayerMovement : MonoBehaviour 
 {
 	bool Ground;
+<<<<<<< HEAD:Assets/Scenes/Reserve Jelmer/PlayerMovement.cs
+=======
+
+>>>>>>> origin/master:Assets/Scripts/PlayerMovement.cs
 	public bool Left;
 	public bool Right;
 	public bool Flipped;
 	public int Speed;
 	public int jumpPower;
+<<<<<<< HEAD:Assets/Scenes/Reserve Jelmer/PlayerMovement.cs
 	bool isCrouched = false;
+=======
+
+	bool isCrouched = false;
+
+>>>>>>> origin/master:Assets/Scripts/PlayerMovement.cs
 	float crouchHeight = 0.5f;
 	float standHeight = 1f;
 
@@ -43,7 +53,7 @@ public class PlayerMovement : MonoBehaviour
 		{
 			Right = false;
 		}
-		if(Input.GetKeyUp (KeyCode.S) && Ground == true)
+		if(Input.GetKeyUp (KeyCode.S) && Ground == true&& isCrouched == true)
 		{
 			standup ();
 		}
@@ -82,13 +92,19 @@ public class PlayerMovement : MonoBehaviour
 	void crouch ()
 	{
 		gameObject.GetComponent<BoxCollider2D> ().size = new Vector2 (1,crouchHeight);
-		Speed = Speed / 3;
+		if (isCrouched == false) 
+		{
+			Speed = Speed / 3;
+		}
 		isCrouched = true;
 	}
 	void standup ()
 	{
 		gameObject.GetComponent<BoxCollider2D> ().size = new Vector2 (1,standHeight);
+		if(isCrouched == true)
+		{
 		Speed = Speed * 3;
+		}
 		isCrouched = false;
 	}
 }
