@@ -10,9 +10,12 @@ public class rotationAngle : MonoBehaviour {
 	bool left;
 	bool right;
 	bool flipped;
+	public Animator Animator;
+
+
 	void Start(){
 
-
+	
 	}
 
 
@@ -32,32 +35,43 @@ public class rotationAngle : MonoBehaviour {
 	}
 
 	void checkKeys(){
+		
 
-		if (Input.GetKeyDown ("i")) {
-			aimUp = true;
-		} else if (Input.GetKeyUp ("i")) {
-			aimUp = false;
-		}
+			if (Input.GetKeyDown ("i")) {
+				aimUp = true;
+				Shoot_Up ();
 
-		if (Input.GetKeyDown ("j")) {
-			aimFwd = true;
-		} else if (Input.GetKeyUp ("j")) {
-			aimFwd = false;
-		}
+			} else if (Input.GetKeyUp ("i")) {
+				Animator.SetBool ("Shoot_Up", false);
+				Animator.SetBool ("Still", true);
+				aimUp = false;
+			}
+
+			if (Input.GetKeyDown ("j")) {
+				Animator.SetBool ("Still", false);
+				Animator.SetBool ("Run", false);
+				Animator.SetBool ("Shoot_Side", true);
+				aimFwd = true;
+			} else if (Input.GetKeyUp ("j")) {
+				Animator.SetBool ("Shoot_Side", false);
+				Animator.SetBool ("Still", true);
+
+				aimFwd = false;
+			}
 
 
-		if (Input.GetKeyDown ("left")) {
-			aimBwd = true;
-		} else if (Input.GetKeyUp ("left")) {
-			aimBwd = false;
-		}
+			if (Input.GetKeyDown ("left")) {
+				aimBwd = true;
+			} else if (Input.GetKeyUp ("left")) {
+				aimBwd = false;
+			}
 
 
-		if (Input.GetKeyDown ("n")) {
-			aimDown = true;
-		} else if (Input.GetKeyUp ("n")) {
-			aimDown = false;
-		}
+			if (Input.GetKeyDown ("n")) {
+				aimDown = true;
+			} else if (Input.GetKeyUp ("n")) {
+				aimDown = false;
+			}
 
 	}
 
@@ -100,5 +114,12 @@ public class rotationAngle : MonoBehaviour {
 		} else if (aimDown) {
 			Rotation = -2;
 		}
+	}
+
+	void Shoot_Up(){
+
+		Animator.SetBool ("Still", false);
+		Animator.SetBool ("Run", false);
+		Animator.SetBool ("Shoot_Up", true);
 	}
 }

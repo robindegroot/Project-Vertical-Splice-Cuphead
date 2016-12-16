@@ -28,13 +28,16 @@ public class PlayerShooting : MonoBehaviour {
 	{
 		if (Time.time >= nextFire)
 		{
+			nextFire = Time.time + fireRate;
 			Projectile_ newProjectile = Instantiate (
 				projectile,
 				muzzle.position,
 				muzzle.rotation) as Projectile_;
-			nextFire = Time.time + fireRate;
+			
 		}
 
 	}
+
+
 
 }
