@@ -8,6 +8,8 @@ public class PlayerShooting : MonoBehaviour {
 	public float bulletSpeed;
 	public float fireRate = 2.0F;
 	private float nextFire = 2.0F;
+	public bool moving;
+	public bool shoot;
 
 	void Start (){
 		nextFire = Time.time + fireRate;
@@ -15,9 +17,16 @@ public class PlayerShooting : MonoBehaviour {
 
 	void Update()
 	{
+		Debug.Log (shoot);
+		moving = GameObject.Find("Player").GetComponent<PlayerMovement>().Moving;
+		if (moving == false) {
+			if (Input.GetKey ("i") || Input.GetKey ("j") || Input.GetKey ("n") && Time.time > nextFire) {
+				shoot = true;
+				Shoot ();
 
-		if (Input.GetKey("i") || Input.GetKey("j") || Input.GetKey("n") && Time.time > nextFire) {
-			Shoot ();
+			} else {
+				shoot = false;
+			}
 
 		}
 

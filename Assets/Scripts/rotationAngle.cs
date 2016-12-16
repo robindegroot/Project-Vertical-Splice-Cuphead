@@ -37,17 +37,17 @@ public class rotationAngle : MonoBehaviour {
 	void checkKeys(){
 		
 
-			if (Input.GetKeyDown ("i")) {
+			if (Input.GetKeyDown ("n")) {
 				aimUp = true;
-				Shoot_Up ();
+				
 
-			} else if (Input.GetKeyUp ("i")) {
+			} else if (Input.GetKeyUp ("n")) {
 				Animator.SetBool ("Shoot_Up", false);
 				Animator.SetBool ("Still", true);
 				aimUp = false;
 			}
 
-			if (Input.GetKeyDown ("j")) {
+			if (Input.GetKey ("j")) {
 				Animator.SetBool ("Still", false);
 				Animator.SetBool ("Run", false);
 				Animator.SetBool ("Shoot_Side", true);
@@ -67,9 +67,10 @@ public class rotationAngle : MonoBehaviour {
 			}
 
 
-			if (Input.GetKeyDown ("n")) {
+			if (Input.GetKeyDown ("i")) {
+			Shoot_Up ();
 				aimDown = true;
-			} else if (Input.GetKeyUp ("n")) {
+			} else if (Input.GetKeyUp ("i")) {
 				aimDown = false;
 			}
 
