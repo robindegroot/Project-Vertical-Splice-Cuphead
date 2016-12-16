@@ -9,7 +9,8 @@ public class EnemyShoot : MonoBehaviour {
     [SerializeField]
     private Transform muzzle;
 
-//    public EnemyProjectile projectile;
+    public EnemyProjectile projectile;
+    
     private float bulletSpeed;
     private float firerate;
     private float nextFireTime;
@@ -17,7 +18,7 @@ public class EnemyShoot : MonoBehaviour {
     void Start ()
     {
         bulletSpeed = 20f;
-        firerate = 5f;
+        firerate = 2f;
         nextFireTime = 0;
         player = GameObject.FindGameObjectWithTag("Player");
         enemyShoot = this;
@@ -32,8 +33,8 @@ public class EnemyShoot : MonoBehaviour {
         transform.LookAt(player.transform);
         if (Time.time >= nextFireTime)
         {
-            //EnemyProjectile newpProjectile = Instantiate(projectile, muzzle.position, muzzle.rotation) as EnemyProjectile;
-           // newpProjectile.SetSpeed(bulletSpeed);
+            EnemyProjectile newpProjectile = Instantiate(projectile, muzzle.position, muzzle.rotation) as EnemyProjectile;
+            newpProjectile.SetSpeed(bulletSpeed);
             nextFireTime = Time.time + firerate;
         }
         

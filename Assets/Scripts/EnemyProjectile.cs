@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Projectile : MonoBehaviour
+public class EnemyProjectile : MonoBehaviour
 {
 	//moeten we helemaal verander
     private float speed;
@@ -23,14 +23,6 @@ public class Projectile : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("EnemyParts")|| other.CompareTag("EnemyTurret"))
-        {
-//            EnemyHealth.enemyhp.Hurt(50);
-            Destroy(gameObject);
-        }
-        if(other.CompareTag("Props"))
-        {
-            Destroy(gameObject);
-        }
+     
     }
 }
