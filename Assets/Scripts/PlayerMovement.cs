@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
+<<<<<<< HEAD
 public class PlayerMovement : MonoBehaviour {
 
 	public float Speed = 0f;
@@ -19,8 +20,44 @@ public class PlayerMovement : MonoBehaviour {
 		
 	}
 
+=======
+public class PlayerMovement : MonoBehaviour
+{
 
+    public float Speed = 0f;
+    public float JumpForce;
+    private float move = 0f;
+    private bool CanJump;
+    public bool Right;
+    public bool Left;
+    public bool Flipped;
 
+    void Update()
+    {
+        if (Input.GetKeyDown("d"))
+        {
+            Right = true;
+            Left = false;
+        }
+
+        if (Input.GetKeyDown("a"))
+        {
+            Right = false;
+            Left = true;
+        }
+>>>>>>> origin/master
+
+        if (!Right && Left)
+        {
+            Flipped = false;
+        }
+        else if (Right && !Left)
+        {
+            Flipped = true;
+        }
+    }
+
+<<<<<<< HEAD
 	void Update(){
 		transform.localRotation = Quaternion.Euler (0, Rotation, 0);
 		//Debug.Log ();
@@ -155,4 +192,35 @@ public class PlayerMovement : MonoBehaviour {
 		Animator.SetBool ("Duck", true);
 		Speed = 0;
 	}
+=======
+
+
+
+    void OnCollisionEnter2D(Collision2D coll)
+    {
+        if (coll.gameObject.tag == "ground")
+        {
+            CanJump = true;
+        }
+    }
+    void OnCollisionExit2D(Collision2D coll)
+    {
+        if (coll.gameObject.tag == "ground")
+        {
+            CanJump = false;
+        }
+    }
+
+    void FixedUpdate()
+    {
+        move = Input.GetAxis("Horizontal");
+        GetComponent<Rigidbody2D>().velocity = new Vector2(move * Speed, GetComponent<Rigidbody2D>().velocity.y);
+        if (Input.GetKey(KeyCode.W) && CanJump)
+        {
+            GetComponent<Rigidbody2D>().AddForce(new Vector2(GetComponent<Rigidbody2D>().velocity.x, JumpForce));
+            CanJump = false;
+
+        }
+    }
+>>>>>>> origin/master
 }

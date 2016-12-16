@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
-/*
+
 public class CameraFollow : MonoBehaviour
 {
 
     public Transform player;
-    public Vector2 offset;
+    public Vector3 offset;
 
     void Start()
     {
@@ -13,9 +13,9 @@ public class CameraFollow : MonoBehaviour
     }
     void LateUpdate()
     {
-        transform.position = player.transform.position + offset;
+       transform.position = player.transform.position + offset;
     }
 
 }
 
-    */
+   
