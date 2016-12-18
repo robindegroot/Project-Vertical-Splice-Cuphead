@@ -30,7 +30,7 @@ public class EnemyShoot : MonoBehaviour {
 	}
     public void Shoot()
     {
-        transform.LookAt(player.transform);
+        //transform.LookAt(player.transform);
         if (Time.time >= nextFireTime)
         {
             EnemyProjectile newpProjectile = Instantiate(projectile, muzzle.position, muzzle.rotation) as EnemyProjectile;

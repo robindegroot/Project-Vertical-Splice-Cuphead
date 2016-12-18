@@ -1,14 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Shooting : MonoBehaviour {
+public class Piranha_Spawner : MonoBehaviour {
 	public EnemyProjectile_ projectile;
 	public Transform muzzle;
 	public float bulletSpeed;
 	public float fireRate = 2.0F;
 	private float nextFire = 2.0F;
-
-	public Animator Animator;
 
 	void Start (){
 		nextFire = Time.time + fireRate;
@@ -16,15 +14,14 @@ public class Shooting : MonoBehaviour {
 
 	void Update()
 	{
-	
-			Shoot ();
+
+		Shoot ();
 	}
 
 	public void Shoot()
 	{
 		if (Time.time >= nextFire)
 		{
-			Animation_Shoot ();
 			EnemyProjectile_ newProjectile = Instantiate (
 				projectile,
 				muzzle.position,
@@ -35,14 +32,5 @@ public class Shooting : MonoBehaviour {
 
 
 	}
-
-	void Animation_Shoot (){
-		
-		Animator.SetTrigger("Flower_Shoot");
-		Animator.SetTrigger("Flower_Still");
-
-	}
-
-
 
 }

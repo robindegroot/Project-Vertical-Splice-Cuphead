@@ -2,15 +2,17 @@
 using System.Collections;
 
 public class EnemyProjectile_ : MonoBehaviour {
-	public float range;
-	private float nextFire = 9;
+	private float nextFire = 7;
+	public float power;
 
 
 
 	void Start () {
-		GetComponent<Rigidbody2D> ().AddForce (transform.up * range * Time.deltaTime);
+		this.GetComponent<Rigidbody2D> ().AddForce (transform.up * power * Time.deltaTime);
 		Destroy (gameObject, 5f);
 	}
+
+
 
 	void OnCollisionEnter2D(Collision2D other)
 	{

@@ -5,6 +5,7 @@ using System.Collections;
 public class PlayerMovement : MonoBehaviour {
 
 	public float Speed = 0f;
+	private float DeathSpeed;
 	public float JumpForce;
 	private float move = 0f;
 	private bool CanJump;
@@ -15,85 +16,102 @@ public class PlayerMovement : MonoBehaviour {
 	public float Rotation;
 	public bool Moving;
 	public bool shoot;
+	private bool Dead = false;
+	private float position;
 
+	private float mass;
+	public Rigidbody2D rigidbody;
 	public Animator Animator;
 	void Start(){
-		
+		rigidbody = GetComponent<Rigidbody2D> ();
 	}
 
 
 	void Update(){
-		shoot = GameObject.Find("Player").GetComponent<PlayerShooting>().shoot;
-		transform.localRotation = Quaternion.Euler (0, Rotation, 0);
-		//Debug.Log (Moving);
-		checkKeys ();
-		if (move < 0 && CanJump && !Ducking) {
-			Moving = true;
+		
+		transform.Translate(Vector3.up * DeathSpeed * Time.deltaTime);
 
-			Run ();
+		if (Dead == false) {
+			
+			shoot = GameObject.Find ("Player").GetComponent<PlayerShooting> ().shoot;
+			transform.localRotation = Quaternion.Euler (0, Rotation, 0);
+			//Debug.Log (Moving);
+			checkKeys ();
+			if (move < 0 && CanJump && !Ducking) {
+				Moving = true;
 
-		} else if (move > 0 && CanJump && !Ducking) {
-			Moving = true;
-			//Rotation = 0;
-			Run ();
-		} else if (move == 0 && CanJump) {
-			Moving = false;
-			Animator.SetBool ("Run", false);
-			//Rotation = 0;
-			//Still ();
+				Run ();
+
+			} else if (move > 0 && CanJump && !Ducking) {
+				Moving = true;
+				//Rotation = 0;
+				Run ();
+			} else if (move == 0 && CanJump) {
+				Moving = false;
+				Animator.SetBool ("Run", false);
+				//Rotation = 0;
+				//Still ();
+			}
+			Debug.Log (Dead);
 		}
-		//Debug.Log (move);
-
 	}
 		
 
 	void checkKeys(){
-		if (Input.GetKeyDown ("d")) {
-			//Run ();
-			Rotation = 0;
-			Right = true;
-			Left = false;
-		} 
-
-		if (Input.GetKeyUp ("d")) {
-			Right = !Right;
-			//Still ();
-		}
-
-		if (Input.GetKeyDown ("a")) {
+		if (Dead == false) {
 			
-			//Run ();
-			Rotation = 180;
-			Right = false;
-			Left = true;
+			if (Input.GetKeyDown ("d")) {
+				//Run ();
+				Rotation = 0;
+				Right = true;
+				Left = false;
+			} 
 
-		}
+			if (Input.GetKeyUp ("d")) {
+				Right = !Right;
+				//Still ();
+			}
 
-		if (Input.GetKeyUp ("a")) {
-			Left = !Left;
-			//Still ();
-		}
-
-		if (!Right && Left) {
-			Flipped = false;
-		} else if (Right && !Left) {
+			if (Input.GetKeyDown ("a")) {
 			
-			Flipped = true;
-		}
+				//Run ();
+				Rotation = 180;
+				Right = false;
+				Left = true;
 
-		if (Input.GetKey ("s") && CanJump) {
-			Animator.SetBool ("Run", false);
-			Duck ();
-			Ducking = true;
-		} else if (Input.GetKeyUp ("s") && CanJump) {
-			Speed = 10;
-			Ducking = false;
-			Still ();
+			}
+
+			if (Input.GetKeyUp ("a")) {
+				Left = !Left;
+				//Still ();
+			}
+
+			if (!Right && Left) {
+				Flipped = false;
+			} else if (Right && !Left) {
+			
+				Flipped = true;
+			}
+
+			if (Input.GetKey ("s") && CanJump) {
+				Animator.SetBool ("Run", false);
+				Duck ();
+				Ducking = true;
+			} else if (Input.GetKeyUp ("s") && CanJump && !Dead) {
+				Speed = 10;
+				Ducking = false;
+				Still ();
+			}
 		}
 	}
 
 
+	void OnCollisionEnter2D(Collision2D coll){
+		if (coll.gameObject.tag == "Death") {
+			Death ();
+		}
 
+	}
 
 	void OnCollisionStay2D(Collision2D coll) 
 	{
@@ -114,17 +132,20 @@ public class PlayerMovement : MonoBehaviour {
 		if (coll.gameObject.tag == "ground") {
 			CanJump = false;
 		}
+
+
 	}
 
 	void FixedUpdate () {
-		move = Input.GetAxis ("Horizontal");
-		GetComponent<Rigidbody2D>().velocity = new Vector2 (move * -Speed, GetComponent<Rigidbody2D>().velocity.y);
-		if (Input.GetKey (KeyCode.W)  && CanJump && !Ducking)
-		{
-			Jump ();
-			GetComponent<Rigidbody2D>().AddForce (new Vector2 (GetComponent<Rigidbody2D>().velocity.x,JumpForce));
-			CanJump = false;
+		if (Dead == false) {
+			move = Input.GetAxis ("Horizontal");
+			GetComponent<Rigidbody2D> ().velocity = new Vector2 (move * -Speed, GetComponent<Rigidbody2D> ().velocity.y);
+			if (Input.GetKey (KeyCode.W) && CanJump && !Ducking) {
+				Jump ();
+				GetComponent<Rigidbody2D> ().AddForce (new Vector2 (GetComponent<Rigidbody2D> ().velocity.x, JumpForce));
+				CanJump = false;
 
+			}
 		}
 	}
 
@@ -151,6 +172,7 @@ public class PlayerMovement : MonoBehaviour {
 
 	void Jump(){
 		Animator.SetBool ("Shoot_Side", false);
+		Animator.SetBool ("Shoot_Up", false);
 		Animator.SetBool ("Run", false);
 		Animator.SetBool ("Still", false);
 		Animator.SetBool ("Duck_Shoot_Side", false);
@@ -176,7 +198,20 @@ public class PlayerMovement : MonoBehaviour {
 		Speed = 0;
 	}
 
-	void DuckShoot(){
+	void Death(){
+		Animator.SetBool ("Shoot_Side", false);
+		Animator.SetBool ("Run", false);
+		Animator.SetBool ("Still", false);
+		Animator.SetBool ("Jump", false);
+		Animator.SetBool ("Duck_Shoot_Side", false);
+		Animator.SetBool ("Shoot_Up", false);
+		Animator.SetBool ("Duck", false);
+		Animator.SetBool ("Duck_Shoot_Side", false);
+		Dead = true;
+		rigidbody.gravityScale = 0;
+		DeathSpeed = 1;
+		Animator.SetBool ("Death", true);
 
 	}
+		
 }
